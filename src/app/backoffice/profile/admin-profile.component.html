@@ -1,0 +1,76 @@
+<div class="page">
+
+  <h2 class="mb-3">My Profile</h2>
+
+  <!-- PROFILE CARD -->
+  <div class="card mb-4">
+    <div class="card-body">
+
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <img *ngIf="user.avatarUrl"
+             [src]="user.avatarUrl"
+             class="avatar"/>
+
+        <div>
+          <div class="name">{{ user.firstName }} {{ user.lastName }}</div>
+          <div class="email">{{ user.email }}</div>
+        </div>
+      </div>
+
+      <form (ngSubmit)="save()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label>First name</label>
+            <input class="form-control" [(ngModel)]="user.firstName" name="firstName">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label>Last name</label>
+            <input class="form-control" [(ngModel)]="user.lastName" name="lastName">
+          </div>
+
+          <div class="col-12 mb-3">
+            <label>Email</label>
+            <input class="form-control" [(ngModel)]="user.email" name="email">
+          </div>
+        </div>
+
+        <button class="btn btn-primary" [disabled]="loading">
+          {{ loading ? 'Saving...' : 'Save changes' }}
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- SESSIONS -->
+  <div class="card">
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between mb-3">
+        <h4>Active Sessions</h4>
+        <button class="btn btn-outline-secondary btn-sm" (click)="loadSessions()">
+          Refresh
+        </button>
+      </div>
+
+      <div *ngIf="sessionsLoading">Loading sessions...</div>
+
+      <div *ngIf="sessions.length === 0 && !sessionsLoading">
+        No sessions found.
+      </div>
+
+      <div *ngFor="let s of sessions" class="session-row">
+        <div>
+          {{ s.browser }} • {{ s.os }}
+          <div class="text-muted small">IP: {{ s.ip }}</div>
+        </div>
+
+        <span class="badge bg-success" *ngIf="!s.revoked">Active</span>
+        <span class="badge bg-secondary" *ngIf="s.revoked">Revoked</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,7 @@
+<div class="box">
+  <h2>Confirmation required</h2>
+  <p *ngIf="!errorMessage">We detected a login from a new device.</p>
+  <p *ngIf="!errorMessage">Please check your email and click <b>Confirm this device</b>.</p>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  <button *ngIf="errorMessage" type="button" (click)="goToLogin()">Back to login</button>
+</div>

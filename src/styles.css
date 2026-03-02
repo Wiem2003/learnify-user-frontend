@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Variables for backoffice admin layout (template Learnify-style) */
+:root {
+  --color-primary: #3D3D60;
+  --color-secondary: #2D5757;
+  --color-accent: #F6BD60;
+  --color-cta: #C84630;
+  --color-background: #F7EDE2;
+  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}

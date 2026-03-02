@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<div class="client-page">
+  <div class="page-hero">
+    <div class="container">
+      <h1 class="hero-title">Join Our <span class="highlight">Clubs</span></h1>
+      <p class="hero-subtitle">Connect with fellow learners and practice English in a fun, supportive environment</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="filters-bar">
+      <div class="search-box">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search clubs..." [(ngModel)]="searchTerm" (input)="filterClubs()">
+      </div>
+      <div class="filter-group">
+        <select [(ngModel)]="selectedCategory" (change)="filterClubs()" class="filter-select">
+          <option value="">All Categories</option>
+          <option value="Speaking Club">Speaking Club</option>
+          <option value="Debate Club">Debate Club</option>
+          <option value="Writing Club">Writing Club</option>
+        </select>
+      </div>
+    </div>
+    <div class="clubs-grid">
+      <div class="club-card" *ngFor="let club of filteredClubs">
+        <div class="card-image">
+          <img [src]="club.image" [alt]="club.name" onerror="this.style.display='none'">
+          <div class="card-badge" [attr.data-category]="club.category">{{ club.category }}</div>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title"><a [routerLink]="['/client/clubs', club.id]">{{ club.name }}</a></h3>
+          <p class="card-description">{{ club.description }}</p>
+          <div class="card-meta">
+            <span class="meta-item"><i class="ti ti-clock"></i> {{ club.schedule }}</span>
+            <span class="meta-item"><i class="ti ti-users"></i> {{ club.maxMembers }} members</span>
+          </div>
+          <div class="card-footer">
+            <a [routerLink]="['/client/clubs', club.id]" class="btn-join">Join Club</a>
+          </div>
+        </div>
+      </div>
+      <div class="no-results" *ngIf="filteredClubs.length === 0">
+        <i class="ti ti-users"></i>
+        <h3>No clubs found</h3>
+        <p>Check back later for new clubs</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

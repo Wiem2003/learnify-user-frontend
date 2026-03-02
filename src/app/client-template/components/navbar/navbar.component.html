@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-lg navbar-modern">
+  <div class="container">
+    <a class="navbar-brand d-inline-flex gap-2 align-items-center lh-1"
+       href="#"
+       (click)="navigateToPage('/client'); $event.preventDefault()">
+      <span class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+          <circle cx="12" cy="10" r="2"/>
+          <path d="M12 14v4"/>
+        </svg>
+      </span>
+      <span class="brand-text">Learnify<span class="brand-accent">English</span></span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="toggler-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a href="/client" class="nav-link" [class.active]="isActiveRoute('/client')"
+             (click)="navigateToPage('/client'); $event.preventDefault()">
+            <i class="ti ti-home"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/client/courses" class="nav-link" [class.active]="isActiveRoute('/client/courses')"
+             (click)="navigateToPage('/client/courses'); $event.preventDefault()">
+            <i class="ti ti-book"></i> Courses
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/client/clubs" class="nav-link" [class.active]="isActiveRoute('/client/clubs')"
+             (click)="navigateToPage('/client/clubs'); $event.preventDefault()">
+            <i class="ti ti-users"></i> Clubs
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/client/events" class="nav-link" [class.active]="isActiveRoute('/client/events')"
+             (click)="navigateToPage('/client/events'); $event.preventDefault()">
+            <i class="ti ti-calendar"></i> Events
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="ti ti-dots"></i> More
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="moreDropdown">
+            <li><a class="dropdown-item" href="/client/schedule" (click)="navigateToPage('/client/schedule'); $event.preventDefault()"><i class="ti ti-calendar-time"></i> Schedule</a></li>
+            <li><a class="dropdown-item" href="/client/certificate" (click)="navigateToPage('/client/certificate'); $event.preventDefault()"><i class="ti ti-award"></i> Certificate</a></li>
+            <li><a class="dropdown-item" href="/client/quiz" (click)="navigateToPage('/client/quiz'); $event.preventDefault()"><i class="ti ti-brain"></i> Quiz</a></li>
+            <li><hr class="dropdown-divider">
+            <li><a class="dropdown-item" href="/client/payment" (click)="navigateToPage('/client/payment'); $event.preventDefault()"><i class="ti ti-credit-card"></i> Payment</a></li>
+            <li><a class="dropdown-item" href="/client/messenger" (click)="navigateToPage('/client/messenger'); $event.preventDefault()"><i class="ti ti-messages"></i> Messenger</a></li>
+            <li><a class="dropdown-item" href="/client/feedback" (click)="navigateToPage('/client/feedback'); $event.preventDefault()"><i class="ti ti-message-dots"></i> Feedback</a></li>
+            <li><a class="dropdown-item" href="/client/cv" (click)="navigateToPage('/client/cv'); $event.preventDefault()"><i class="ti ti-file-description"></i> CV Builder</a></li>
+            <li><a class="dropdown-item" href="/client/job-offers" (click)="navigateToPage('/client/job-offers'); $event.preventDefault()"><i class="ti ti-briefcase"></i> Job Board</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="/client/profile" class="nav-link" [class.active]="isActiveRoute('/client/profile')"
+             (click)="navigateToPage('/client/profile'); $event.preventDefault()">
+            <i class="ti ti-user"></i> Profile
+          </a>
+        </li>
+      </ul>
+
+      <div class="navbar-actions">
+        <ng-container *ngIf="user; else notLoggedIn">
+          <a href="/client/profile" class="d-flex align-items-center gap-2 text-decoration-none" (click)="navigateToPage('/client/profile'); $event.preventDefault()">
+            <img [src]="getAvatar()" alt="avatar" class="rounded-circle" style="width:38px;height:38px;object-fit:cover;" />
+            <span class="fw-semibold text-dark">{{ user.firstName }} {{ user.lastName }}</span>
+          </a>
+          <button type="button" class="btn-logout" (click)="logout()" title="Déconnexion">
+            <i class="ti ti-logout"></i> Logout
+          </button>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <a href="/auth/login" class="btn-link" (click)="navigateToPage('/auth/login'); $event.preventDefault()">
+            Sign In
+          </a>
+          <button type="button" class="btn-cta" (click)="onGetStarted()">
+            Get Started
+            <i class="ti ti-arrow-right"></i>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>

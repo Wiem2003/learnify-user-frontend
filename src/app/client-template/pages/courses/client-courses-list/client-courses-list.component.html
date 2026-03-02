@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+<div class="client-page">
+  <div class="page-hero">
+    <div class="container">
+      <h1 class="hero-title">Explore Our <span class="highlight">Courses</span></h1>
+      <p class="hero-subtitle">Master English with expert-led courses designed for all levels</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="filters-bar">
+      <div class="search-box">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search courses..." [(ngModel)]="searchTerm" (input)="filterCourses()">
+      </div>
+      <div class="filter-group">
+        <select [(ngModel)]="selectedLevel" (change)="filterCourses()" class="filter-select">
+          <option value="">All Levels</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+        <select [(ngModel)]="selectedCategory" (change)="filterCourses()" class="filter-select">
+          <option value="">All Categories</option>
+          <option value="Grammar">Grammar</option>
+          <option value="Speaking">Speaking</option>
+          <option value="Business English">Business English</option>
+        </select>
+      </div>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card" *ngFor="let course of filteredCourses">
+        <div class="card-image">
+          <img [src]="course.thumbnail || course.image" [alt]="course.title" onerror="this.style.display='none'">
+          <div class="card-badge" [attr.data-level]="getLevelLabel(course.level)">{{ getLevelLabel(course.level) }}</div>
+        </div>
+        <div class="card-content">
+          <div class="card-category">{{ course.category }}</div>
+          <h3 class="card-title"><a [routerLink]="['/client/courses', course.id]">{{ course.title }}</a></h3>
+          <p class="card-description">{{ course.description }}</p>
+          <div class="card-meta">
+            <span class="meta-item"><i class="ti ti-book"></i> {{ course.lessons }} Lessons</span>
+            <span class="meta-item"><i class="ti ti-clock"></i> {{ course.duration }}</span>
+            <span class="meta-item"><i class="ti ti-users"></i> {{ course.students }} Students</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">${{ course.price }}</div>
+            <a [routerLink]="['/client/courses', course.id]" class="btn-enroll">View Details</a>
+          </div>
+        </div>
+      </div>
+      <div class="no-results" *ngIf="filteredCourses.length === 0">
+        <i class="ti ti-book"></i>
+        <h3>No courses found</h3>
+        <p>Try adjusting your filters or search term</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

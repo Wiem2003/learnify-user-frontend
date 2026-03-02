@@ -1,0 +1,52 @@
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Why Learnify English</span>
+      <h2 class="section-title">
+        Everything You Need to
+        <span class="title-highlight">Master English</span>
+      </h2>
+      <p class="section-description">
+        Our platform combines cutting-edge technology with expert instruction to deliver
+        an unparalleled learning experience. Join thousands achieving their language goals.
+      </p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features; let i = index" [style.animation-delay]="(i * 100) + 'ms'">
+        <div class="feature-icon-wrapper">
+          <div class="feature-icon" [style.background]="feature.gradient">
+            <i class="ti ti-video" *ngIf="feature.icon === 'video'"></i>
+            <i class="ti ti-users" *ngIf="feature.icon === 'users'"></i>
+            <i class="ti ti-award" *ngIf="feature.icon === 'certificate'"></i>
+            <i class="ti ti-brain" *ngIf="feature.icon === 'brain'"></i>
+            <i class="ti ti-calendar" *ngIf="feature.icon === 'calendar'"></i>
+            <i class="ti ti-messages" *ngIf="feature.icon === 'chat'"></i>
+            <i class="ti ti-chart-bar" *ngIf="feature.icon === 'chart'"></i>
+            <i class="ti ti-book" *ngIf="feature.icon === 'book'"></i>
+          </div>
+          <div class="feature-glow" [style.background]="feature.gradient"></div>
+        </div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+        <a [routerLink]="[feature.link]" class="feature-link">
+          Learn more <i class="ti ti-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="features-cta">
+      <div class="cta-content">
+        <h3>Ready to Start Your Journey?</h3>
+        <p>Join 50,000+ learners already improving their English with Learnify English</p>
+      </div>
+      <div class="cta-actions">
+        <a routerLink="/client/preevaluation" class="btn-cta-primary">
+          <i class="ti ti-player-play"></i>
+          Take Free Assessment
+        </a>
+        <a routerLink="/client/courses" class="btn-cta-secondary">
+          Browse Courses
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

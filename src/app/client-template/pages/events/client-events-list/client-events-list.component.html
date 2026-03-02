@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+<div class="client-page">
+  <div class="page-hero">
+    <div class="container">
+      <h1 class="hero-title">Upcoming <span class="highlight">Events</span></h1>
+      <p class="hero-subtitle">Join workshops, competitions, and webinars to enhance your English skills</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="filters-bar">
+      <div class="search-box">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search events..." [(ngModel)]="searchTerm" (input)="filterEvents()">
+      </div>
+      <div class="filter-group">
+        <select [(ngModel)]="selectedCategory" (change)="filterEvents()" class="filter-select">
+          <option value="">All Categories</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Competition">Competition</option>
+          <option value="Webinar">Webinar</option>
+        </select>
+      </div>
+    </div>
+    <div class="events-grid">
+      <div class="event-card" *ngFor="let event of filteredEvents">
+        <div class="card-image">
+          <img [src]="event.image" [alt]="event.title" onerror="this.style.display='none'">
+          <div class="card-date">
+            <span class="date-day">{{ event.date | date:'d' }}</span>
+            <span class="date-month">{{ event.date | date:'MMM' }}</span>
+          </div>
+          <div class="card-badge" [attr.data-category]="event.category">{{ event.category }}</div>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title"><a [routerLink]="['/client/events', event.id]">{{ event.title }}</a></h3>
+          <p class="card-description">{{ event.description }}</p>
+          <div class="card-meta">
+            <span class="meta-item"><i class="ti ti-clock"></i> {{ event.time }}</span>
+            <span class="meta-item"><i class="ti ti-map-pin"></i> {{ event.location }}</span>
+            <span class="meta-item"><i class="ti ti-users"></i> {{ event.maxParticipants }} spots</span>
+          </div>
+          <div class="card-footer">
+            <a [routerLink]="['/client/events', event.id]" class="btn-register">Register Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="no-results" *ngIf="filteredEvents.length === 0">
+        <i class="ti ti-calendar"></i>
+        <h3>No events found</h3>
+        <p>Check back later for upcoming events</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
