@@ -22,6 +22,16 @@ export class Signin implements OnInit {
   loginMessage = '';
   apiErrorMessage = '';
 
+  /** Compte bloqué après 3 tentatives (status 423). */
+  accountLocked = false;
+  /** Clic sur "Débloquer avec PIN" : PIN envoyé par email, afficher champ PIN. */
+  unblockPinSent = false;
+  unblockPin = '';
+  unblockPinError = '';
+  unblockPinLoading = false;
+  /** PIN validé : afficher "PIN valide" + liens Reset password / Home. */
+  unblockSuccess = false;
+
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -93,10 +103,65 @@ export class Signin implements OnInit {
           return;
         }
 
+        // Compte bloqué après 3 tentatives (15 min)
+        if (error?.status === 423 && (error?.error?.code === 'ACCOUNT_LOCKED' || error?.error?.message)) {
+          this.accountLocked = true;
+          this.apiErrorMessage = error?.error?.message || 'Account locked for 15 minutes.';
+          return;
+        }
+
         const msg = error?.error?.message || '';
         this.apiErrorMessage = (msg === 'User not found' ? 'Email does not exist' : msg) || 'Invalid credentials';
       }
     });
+  }
+
+  requestUnblockPin() {
+    if (!this.email?.trim()) {
+      this.unblockPinError = 'Email is required';
+      return;
+    }
+    this.unblockPinError = '';
+    this.unblockPinLoading = true;
+    this.authService.unblockRequest(this.email.trim()).subscribe({
+      next: () => {
+        this.unblockPinSent = true;
+        this.unblockPin = '';
+        this.unblockPinLoading = false;
+      },
+      error: (err) => {
+        this.unblockPinError = err?.error?.message || 'Failed to send PIN';
+        this.unblockPinLoading = false;
+      }
+    });
+  }
+
+  verifyUnblockPin() {
+    if (!this.email?.trim() || !this.unblockPin?.trim()) {
+      this.unblockPinError = 'Please enter the PIN received by email';
+      return;
+    }
+    this.unblockPinError = '';
+    this.unblockPinLoading = true;
+    this.authService.unblockVerify(this.email.trim(), this.unblockPin.trim()).subscribe({
+      next: () => {
+        this.unblockSuccess = true;
+        this.unblockPinLoading = false;
+      },
+      error: (err) => {
+        this.unblockPinError = err?.error?.message || 'Invalid or expired PIN';
+        this.unblockPinLoading = false;
+      }
+    });
+  }
+
+  resetUnblockState() {
+    this.accountLocked = false;
+    this.unblockPinSent = false;
+    this.unblockPin = '';
+    this.unblockPinError = '';
+    this.unblockSuccess = false;
+    this.apiErrorMessage = '';
   }
 
   // ✅ fallback: essayer de lire le role depuis JWT si /me échoue
@@ -203,5 +268,9 @@ export class Signin implements OnInit {
 
     const backendRole = r.toUpperCase();
     window.location.href = `http://localhost:8080/oauth2/authorize/google/login/${backendRole}`;
+  }
+
+  goToQrLogin() {
+    this.router.navigate(['/auth/qr-login'], { queryParamsHandling: 'merge' });
   }
 }

@@ -46,6 +46,16 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/reset-password`, data, { responseType: 'text' as const });
   }
 
+  /** Demande d'envoi du PIN de déblocage par email (compte bloqué après 3 échecs). */
+  unblockRequest(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/unblock-request`, { email }, { responseType: 'text' as const });
+  }
+
+  /** Vérification du PIN de déblocage. */
+  unblockVerify(email: string, pin: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/unblock-verify`, { email, pin }, { responseType: 'text' as const });
+  }
+
   confirmDevice(token: string) {
     return this.http.post<any>(
       `http://localhost:8080/api/auth/device/confirm?token=${encodeURIComponent(token)}`,

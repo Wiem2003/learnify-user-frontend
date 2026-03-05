@@ -13,6 +13,8 @@ export class JwtInterceptor implements HttpInterceptor {
       '/api/auth/register',
       '/api/auth/forgot-password',
       '/api/auth/reset-password',
+      '/api/auth/unblock-request',
+      '/api/auth/unblock-verify',
 
       // ✅ login passkey (public)
       '/api/webauthn/authenticate'

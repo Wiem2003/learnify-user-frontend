@@ -8,11 +8,12 @@
   </div>
 
   <div class="d-flex gap-2">
-    <!-- Search input (search + reset page to 1 on change) -->
+    <!-- Recherche combinée par nom et email -->
     <input
       type="text"
       class="form-control search"
-      placeholder="Search (name / email)..."
+      placeholder="Search by name or email..."
+      title="Filter users by name or email"
       [(ngModel)]="q"
       (ngModelChange)="setPage(1)"
     />
@@ -33,32 +34,41 @@
       Loading...
     </div>
 
-    <div *ngIf="!loading && filteredUsers.length === 0" class="p-4 text-center text-muted">
+    <div *ngIf="!loading && loadError" class="p-4 text-center">
+      <p class="text-danger mb-2"><strong>Error:</strong> {{ loadError }}</p>
+      <button type="button" class="btn btn-primary btn-sm" (click)="reload()">Retry</button>
+    </div>
+
+    <div *ngIf="!loading && !loadError && filteredUsers.length === 0" class="p-4 text-center text-muted">
       No users found.
     </div>
 
-    <div class="table-responsive" *ngIf="!loading && filteredUsers.length > 0">
+    <div class="table-responsive" *ngIf="!loading && !loadError && filteredUsers.length > 0">
       <table class="table table-hover align-middle mb-0">
         <thead class="table-light">
           <tr>
-            <!-- (4) SORTING: click headers to sort -->
-            <th style="width: 80px; cursor: pointer;" (click)="setSort('id')">
+            <!-- Tri: ID -->
+            <th style="width: 70px; cursor: pointer;" (click)="setSort('id')" title="Sort by ID">
               ID
               <span *ngIf="sortField === 'id'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
             </th>
 
-            <th style="cursor: pointer;" (click)="setSort('name')">
-              User
+            <th style="width: 70px">Photo</th>
+
+            <!-- Tri: Nom -->
+            <th style="cursor: pointer;" (click)="setSort('name')" title="Sort by name">
+              Name
               <span *ngIf="sortField === 'name'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
             </th>
 
-            <th style="cursor: pointer;" (click)="setSort('email')">
+            <!-- Tri: Email -->
+            <th style="cursor: pointer;" (click)="setSort('email')" title="Sort by email">
               Email
               <span *ngIf="sortField === 'email'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
             </th>
 
-            <th style="width: 160px">Role</th>
-            <th style="width: 160px" class="text-end">Action</th>
+            <th style="width: 120px">Role</th>
+            <th style="width: 100px" class="text-end">Actions</th>
           </tr>
         </thead>
 
@@ -67,33 +77,26 @@
           <tr *ngFor="let u of pagedUsers">
             <td class="text-muted">{{ u.id }}</td>
 
+            <!-- Photo de profil -->
             <td>
-              <div class="d-flex align-items-center gap-2">
-                <!-- Avatar -->
-                <ng-container *ngIf="getAvatar(u) as src; else placeholder">
-                  <img
-                    [src]="src"
-                    class="avatar"
-                    alt="avatar"
-                    (error)="onAvatarError(u)"
-                    referrerpolicy="no-referrer"
-                  />
-                </ng-container>
-
-                <!-- Placeholder if no avatar -->
-                <ng-template #placeholder>
-                  <div class="avatar placeholder">
-                    {{ (u.firstName && u.firstName.length > 0) ? u.firstName[0] : 'U' }}
-                  </div>
-                </ng-template>
-
-                <div>
-                  <div class="fw-semibold">
-                    {{ u.firstName }} {{ u.lastName }}
-                  </div>
-                  <small class="text-muted">Account</small>
+              <ng-container *ngIf="getAvatar(u) as src; else placeholder">
+                <img
+                  [src]="src"
+                  class="avatar"
+                  [alt]="u.firstName + ' ' + u.lastName"
+                  (error)="onAvatarError(u)"
+                  referrerpolicy="no-referrer"
+                />
+              </ng-container>
+              <ng-template #placeholder>
+                <div class="avatar placeholder">
+                  {{ (u.firstName && u.firstName.length > 0) ? u.firstName[0] : 'U' }}
                 </div>
-              </div>
+              </ng-template>
+            </td>
+
+            <td>
+              <div class="fw-semibold">{{ u.firstName }} {{ u.lastName }}</div>
             </td>
 
             <td>{{ u.email }}</td>
@@ -106,7 +109,7 @@
             </td>
 
             <td class="text-end">
-              <button class="btn btn-sm btn-outline-danger" (click)="delete(u)">
+              <button type="button" class="btn btn-sm btn-danger" (click)="delete(u)" title="Delete user">
                 Delete
               </button>
             </td>

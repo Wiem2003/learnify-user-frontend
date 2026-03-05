@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { apiBaseUrl } from '../utils/api-base';
 
 export interface User {
   id: number;
@@ -14,11 +15,11 @@ export interface User {
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private baseUrl = 'http://localhost:8080/api/users';
-  private adminUrl = 'http://localhost:8080/api/admin/users';
+  private baseUrl = `${apiBaseUrl()}/api/users`;
+  private adminUrl = `${apiBaseUrl()}/api/admin/users`;
 
   // ✅ NEW: me sessions
-  private meUrl = 'http://localhost:8080/api/me';
+  private meUrl = `${apiBaseUrl()}/api/me`;
 
   constructor(private http: HttpClient) {}
 

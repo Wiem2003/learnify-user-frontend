@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, User } from '../../services/user';
+import { apiBaseUrl } from '../../utils/api-base';
 
 @Component({
   selector: 'app-users',
@@ -14,6 +15,7 @@ export class UsersComponent implements OnInit {
   // =========================
   users: User[] = [];
   loading = false;
+  loadError: string | null = null;
 
   // Search text
   q = '';
@@ -21,7 +23,7 @@ export class UsersComponent implements OnInit {
   // =========================
   // (2) AVATAR / IMAGE DISPLAY
   // =========================
-  private readonly API_BASE = 'http://localhost:8080'; // backend base URL
+  private readonly API_BASE = apiBaseUrl();
 
   // =========================
   // (3) PAGINATION (5 per page)
@@ -156,27 +158,33 @@ export class UsersComponent implements OnInit {
   // =========================
   reload() {
     this.loading = true;
+    this.loadError = null;
 
     this.userService.getAllUsers().subscribe({
       next: (data) => {
-        this.users = data ?? [];
-
-        // (3) PAGINATION - reset to first page after reload
+        this.users = Array.isArray(data) ? data : [];
         this.page = 1;
-
-        // (4) SORTING - optional: reset sort on reload (keep if you want)
-        // this.sortField = 'id';
-        // this.sortDir = 'asc';
-
         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
+        console.error('Load users error', err);
         this.users = [];
-
-        // (3) PAGINATION - reset
         this.page = 1;
-
+        const status = err?.status;
+        const bodyMessage = err?.error?.message;
+        if (status === 403) {
+          this.loadError = 'Access denied. You must be logged in as Administrator.';
+        } else if (status === 401) {
+          this.loadError = 'Please log in again.';
+        } else if (status === 404) {
+          this.loadError = 'API not found. Ensure the backend (UserAndPreevaluation) is running.';
+        } else if (status === 0 || !status) {
+          this.loadError = 'Cannot reach the server. Start the backend (UserAndPreevaluation) on port 8080, then click Refresh.';
+        } else if (status === 400 && bodyMessage) {
+          this.loadError = `Server error (400): ${bodyMessage}`;
+        } else {
+          this.loadError = `Unable to load users (${status}). ${bodyMessage || 'Check that the server is running and try again.'}`;
+        }
         this.loading = false;
       }
     });

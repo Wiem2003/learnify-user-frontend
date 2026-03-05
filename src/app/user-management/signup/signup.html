@@ -1,133 +1,106 @@
-<div class="site-section">
-  <div class="container">
+<div class="signup-page">
+  <div class="signup-container">
+    <a href="#" class="back-link" (click)="goBack(); $event.preventDefault()">
+      <i class="ti ti-arrow-left"></i> Back
+    </a>
 
-    <div class="row justify-content-center">
-      <div class="col-md-5">
-
-        <button
-          type="button"
-          class="btn btn-outline-dark btn-lg w-100 mt-2"
-          (click)="continueWithGoogle()">
-          Continue with Google
-        </button>
-
-        <h3 class="text-center mb-4">
-          Register as {{ role | titlecase }}
-        </h3>
-
-        <!-- ✅ NEW: message erreur -->
-        <div *ngIf="error" class="alert alert-danger">
-          {{ error }}
-        </div>
-
-        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text"
-                   class="form-control form-control-lg"
-                   [(ngModel)]="firstName"
-                   name="firstName"
-                   #firstNameRef="ngModel"
-                   placeholder="First name"
-                   required>
-            <small class="text-danger" *ngIf="(firstNameRef.touched || firstNameRef.dirty) && firstNameRef.errors?.['required']">
-              First name is required
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text"
-                   class="form-control form-control-lg"
-                   [(ngModel)]="lastName"
-                   name="lastName"
-                   #lastNameRef="ngModel"
-                   placeholder="Last name"
-                   required>
-            <small class="text-danger" *ngIf="(lastNameRef.touched || lastNameRef.dirty) && lastNameRef.errors?.['required']">
-              Last name is required
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email"
-                   class="form-control form-control-lg"
-                   [(ngModel)]="email"
-                   name="email"
-                   #emailRef="ngModel"
-                   placeholder="Email"
-                   appGmailEmail
-                   required>
-            <small class="text-danger" *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.errors?.['required']">
-              Email is required
-            </small>
-            <small class="text-danger" *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.errors?.['email']">
-              Please enter a valid email address
-            </small>
-            <small class="text-danger" *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.errors?.['gmail']">
-              Email must be a @gmail.com address
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password"
-                   class="form-control form-control-lg"
-                   [(ngModel)]="password"
-                   name="password"
-                   #passwordRef="ngModel"
-                   placeholder="Password"
-                   required
-                   minlength="6">
-            <small class="text-danger" *ngIf="(passwordRef.touched || passwordRef.dirty) && passwordRef.errors?.['required']">
-              Password is required
-            </small>
-            <small class="text-danger" *ngIf="(passwordRef.touched || passwordRef.dirty) && passwordRef.errors?.['minlength']">
-              Password must be at least 6 characters
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password"
-                   class="form-control form-control-lg"
-                   [(ngModel)]="confirmPassword"
-                   name="confirmPassword"
-                   #confirmPasswordRef="ngModel"
-                   [appConfirmPassword]="password"
-                   placeholder="Confirm password"
-                   required>
-            <small class="text-danger" *ngIf="(confirmPasswordRef.touched || confirmPasswordRef.dirty) && confirmPasswordRef.errors?.['required']">
-              Confirm password is required
-            </small>
-            <small class="text-danger" *ngIf="(confirmPasswordRef.touched || confirmPasswordRef.dirty) && confirmPasswordRef.errors?.['confirmMismatch']">
-              Passwords do not match
-            </small>
-          </div>
-
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="loading || f.invalid">
-              {{ loading ? 'Creating...' : 'Sign Up' }}
-            </button>
-          </div>
-
-        </form>
-
-        <br>
-
-        <div class="text-center">
-          <p>
-            Already have an account?
-            <a [routerLink]="['/auth/login']" [queryParams]="{ role: role }">
-              Login
-            </a>
-          </p>
-        </div>
-
-      </div>
+    <div class="signup-icon">
+      <i class="ti ti-user-circle"></i>
     </div>
+    <h1 class="signup-title">Sign up as <strong>{{ role | titlecase }}</strong></h1>
 
+    <button
+      type="button"
+      class="btn btn-google btn-lg w-100"
+      (click)="continueWithGoogle()">
+      Continue with Google
+    </button>
+
+    <div class="divider"><span>or</span></div>
+
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="form-row">
+        <div class="form-group half">
+          <label>First Name</label>
+          <input type="text"
+                 class="form-control form-control-lg"
+                 [(ngModel)]="firstName"
+                 name="firstName"
+                 #firstNameRef="ngModel"
+                 placeholder="First name"
+                 required>
+          <small class="text-danger" *ngIf="(firstNameRef.touched || firstNameRef.dirty) && firstNameRef.errors?.['required']">
+            First name is required
+          </small>
+        </div>
+        <div class="form-group half">
+          <label>Last Name</label>
+          <input type="text"
+                 class="form-control form-control-lg"
+                 [(ngModel)]="lastName"
+                 name="lastName"
+                 #lastNameRef="ngModel"
+                 placeholder="Last name"
+                 required>
+          <small class="text-danger" *ngIf="(lastNameRef.touched || lastNameRef.dirty) && lastNameRef.errors?.['required']">
+            Last name is required
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email"
+               class="form-control form-control-lg"
+               [(ngModel)]="email"
+               name="email"
+               #emailRef="ngModel"
+               placeholder="you@gmail.com"
+               appGmailEmail
+               required>
+        <small class="text-danger" *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.errors?.['required']">Email is required</small>
+        <small class="text-danger" *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.errors?.['email']">Please enter a valid email</small>
+        <small class="text-danger" *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.errors?.['gmail']">Email must be a @gmail.com address</small>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password"
+               class="form-control form-control-lg"
+               [(ngModel)]="password"
+               name="password"
+               #passwordRef="ngModel"
+               placeholder="Password"
+               required
+               minlength="6">
+        <small class="text-danger" *ngIf="(passwordRef.touched || passwordRef.dirty) && passwordRef.errors?.['required']">Password is required</small>
+        <small class="text-danger" *ngIf="(passwordRef.touched || passwordRef.dirty) && passwordRef.errors?.['minlength']">Password must be at least 6 characters</small>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password"
+               class="form-control form-control-lg"
+               [(ngModel)]="confirmPassword"
+               name="confirmPassword"
+               #confirmPasswordRef="ngModel"
+               [appConfirmPassword]="password"
+               placeholder="Repeat password"
+               required>
+        <small class="text-danger" *ngIf="(confirmPasswordRef.touched || confirmPasswordRef.dirty) && confirmPasswordRef.errors?.['required']">Confirm password is required</small>
+        <small class="text-danger" *ngIf="(confirmPasswordRef.touched || confirmPasswordRef.dirty) && confirmPasswordRef.errors?.['confirmMismatch']">Passwords do not match</small>
+      </div>
+
+      <button type="submit" class="btn btn-create-account btn-lg w-100" [disabled]="loading || f.invalid">
+        {{ loading ? 'Creating...' : 'Create account' }}
+      </button>
+    </form>
+
+    <p class="signin-link-wrap">
+      Already have an account?
+      <a [routerLink]="['/auth/login']" [queryParams]="{ role: role }" class="signin-link">Sign in</a>
+    </p>
   </div>
 </div>

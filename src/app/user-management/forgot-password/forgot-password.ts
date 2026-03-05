@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 
 @Component({
@@ -8,14 +8,20 @@ import { AuthService } from '../../services/auth';
   templateUrl: './forgot-password.html',
   styleUrls: ['./forgot-password.css']
 })
-export class ForgotPassword {
+export class ForgotPassword implements OnInit {
 
   email = '';
   loading = false;
   message = '';
   error = '';
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['email']) this.email = params['email'];
+    });
+  }
 
   sendPin() {
     this.message = '';

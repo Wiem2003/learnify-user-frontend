@@ -1,4 +1,4 @@
-import { Component, signal, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, signal, HostListener, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService, SessionUser } from '../../../services/session';
 
@@ -9,6 +9,8 @@ import { SessionService, SessionUser } from '../../../services/session';
   standalone: false,
 })
 export class NavbarComponent implements OnInit {
+  /** Sur la page d'accueil publique (/) : pas de lien Profil, Get Started → signup-choice */
+  @Input() isPublic = false;
   @Output() openModal = new EventEmitter<void>();
   activeSection = signal<string>('hero');
 
@@ -87,12 +89,17 @@ export class NavbarComponent implements OnInit {
 
   isActiveRoute(path: string): boolean {
     const url = this.router.url.split('?')[0];
+    if (path === '/') return url === '' || url === '/';
     if (path === '/client' || path === '/client/') return url === '/client' || url === '/client/';
     return url.startsWith(path);
   }
 
   onGetStarted() {
-    this.openModal.emit();
+    if (this.isPublic) {
+      this.router.navigate(['/auth/signup-choice']);
+    } else {
+      this.openModal.emit();
+    }
   }
 
   logout(): void {

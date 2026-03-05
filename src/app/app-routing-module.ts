@@ -12,6 +12,8 @@ const routes: Routes = [
 
   // Page d'accueil publique — si connecté, Back ne doit pas y ramener → redirection /client
   { path: '', component: Home, canActivate: [guestGuard] },
+  // /home : page "Choose Your Space" (accessible à tous, pour Logout et Back to Site)
+  { path: 'home', component: Home },
 
   // Auth (login, signup) — si déjà connecté → redirection vers /client/home
   {

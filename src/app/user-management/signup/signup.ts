@@ -29,13 +29,13 @@ export class Signup implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.role = (params['role'] || '').toString().toLowerCase();
-
-      if (this.role !== 'student' && this.role !== 'candidate') {
-        alert("Role not specified");
-        this.router.navigate(['/']);
-      }
+      const r = (params['role'] || 'student').toString().toLowerCase();
+      this.role = (r === 'student' || r === 'candidate') ? r : 'student';
     });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/auth/signup-choice']);
   }
 
   // ✅ deviceId + cookie DEVICE_ID (pour OAuth2)

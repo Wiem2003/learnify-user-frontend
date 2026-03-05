@@ -1,0 +1,74 @@
+<div class="site-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h3 class="text-center mb-4">Sign in with QR code</h3>
+
+        <div class="card">
+          <div class="card-body">
+            <p class="mb-3">
+              Optionally enter your email to help us pre-fill your account:
+            </p>
+
+            <div class="form-group mb-3">
+              <label>Email address (optional)</label>
+              <input
+                type="email"
+                class="form-control form-control-lg"
+                [(ngModel)]="email"
+                name="email"
+                placeholder="Enter email (optional)"
+              >
+            </div>
+
+            <button
+              class="btn btn-primary btn-lg w-100"
+              [disabled]="loading"
+              (click)="getQrCode()">
+              {{ loading ? 'Generating QR code...' : 'Get QR code' }}
+            </button>
+
+            <p *ngIf="errorMessage" class="alert alert-danger mt-3">
+              {{ errorMessage }}
+            </p>
+          </div>
+        </div>
+
+        <div *ngIf="qrUrl" class="card mt-4 text-center">
+          <div class="card-body">
+            <p class="mb-3">
+              Scan this QR code with your phone to continue.
+            </p>
+
+            <qrcode
+              [qrdata]="qrUrl"
+              [width]="250"
+              [errorCorrectionLevel]="'M'">
+            </qrcode>
+
+            <p class="mt-3 text-muted" *ngIf="expiresAt">
+              This QR code will expire soon.
+            </p>
+
+            <p class="mt-2" *ngIf="statusText">
+              {{ statusText }}
+            </p>
+
+            <button
+              class="btn btn-outline-secondary btn-sm mt-3"
+              (click)="regenerate()">
+              Regenerate QR code
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a [routerLink]="['/auth/login']">
+            Back to normal sign-in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

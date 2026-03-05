@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-modern">
   <div class="container">
     <a class="navbar-brand d-inline-flex gap-2 align-items-center lh-1"
-       href="#"
-       (click)="navigateToPage('/client'); $event.preventDefault()">
+       [href]="isPublic ? '/' : '/client'"
+       (click)="navigateToPage(isPublic ? '/' : '/client'); $event.preventDefault()">
       <span class="brand-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
@@ -24,8 +24,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a href="/client" class="nav-link" [class.active]="isActiveRoute('/client')"
-             (click)="navigateToPage('/client'); $event.preventDefault()">
+          <a [href]="isPublic ? '/' : '/client'" class="nav-link" [class.active]="isActiveRoute(isPublic ? '/' : '/client')"
+             (click)="navigateToPage(isPublic ? '/' : '/client'); $event.preventDefault()">
             <i class="ti ti-home"></i> Home
           </a>
         </li>
@@ -63,7 +63,7 @@
             <li><a class="dropdown-item" href="/client/job-offers" (click)="navigateToPage('/client/job-offers'); $event.preventDefault()"><i class="ti ti-briefcase"></i> Job Board</a></li>
           </ul>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!isPublic">
           <a href="/client/profile" class="nav-link" [class.active]="isActiveRoute('/client/profile')"
              (click)="navigateToPage('/client/profile'); $event.preventDefault()">
             <i class="ti ti-user"></i> Profile
@@ -83,7 +83,7 @@
         </ng-container>
         <ng-template #notLoggedIn>
           <a href="/auth/login" class="btn-link" (click)="navigateToPage('/auth/login'); $event.preventDefault()">
-            Sign In
+            Sign in
           </a>
           <button type="button" class="btn-cta" (click)="onGetStarted()">
             Get Started

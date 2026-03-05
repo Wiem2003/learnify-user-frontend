@@ -1,3 +1,165 @@
+.signin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  padding: 2rem 1rem;
+}
+
+.signin-container {
+  max-width: 420px;
+  width: 100%;
+}
+
+.role-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.25rem;
+  background: #e5e7eb;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.role-tab {
+  flex: 1;
+  padding: 0.6rem 0.5rem;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-tab.active {
+  background: #1f2937;
+  color: #fff;
+}
+
+.role-tab:hover:not(.active) {
+  background: rgba(255,255,255,0.6);
+  color: #374151;
+}
+
+.btn-google {
+  background: #1f2937 !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.btn-google:hover {
+  background: #374151 !important;
+  color: #fff !important;
+}
+
+.btn-qr {
+  background: #fff !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-qr:hover {
+  background: #f9fafb !important;
+  border-color: #9ca3af;
+}
+
+.signin-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.25rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.signin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.btn-login {
+  background: #14b8a6 !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+}
+
+.btn-login:hover:not(:disabled) {
+  background: #0d9488 !important;
+  color: #fff !important;
+}
+
+.btn-passkey {
+  background: #fff !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-passkey:hover:not(:disabled) {
+  background: #f9fafb !important;
+  border-color: #9ca3af;
+}
+
+.forgot-wrap {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.forgot-wrap a {
+  color: #6366f1;
+  text-decoration: none;
+}
+
+.forgot-wrap a:hover {
+  text-decoration: underline;
+}
+
+.signup-link-wrap {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.signup-link-wrap a {
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.signup-link-wrap a:hover {
+  text-decoration: underline;
+}
+
 .btn-primary {
   background-color: #4518cc !important;
   border-color: #886cf8 !important;

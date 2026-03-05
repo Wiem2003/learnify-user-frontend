@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user';
 import { SessionService } from '../../services/session';
+import { QrAuthService } from '../../services/qr-auth';
 
 @Component({
   selector: 'app-oauth2-redirect',
@@ -15,7 +16,8 @@ export class Oauth2Redirect implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private session: SessionService
+    private session: SessionService,
+    private qrAuth: QrAuthService
   ) {}
 
   ngOnInit(): void {
@@ -86,10 +88,10 @@ export class Oauth2Redirect implements OnInit {
             role
           });
 
-          this.navigateByRole(role);
+          this.handlePostLogin(role);
         },
         error: () => {
-          this.navigateByRole(role);
+          this.handlePostLogin(role);
         }
       });
     });
@@ -113,5 +115,27 @@ export class Oauth2Redirect implements OnInit {
     else if (r === 'STUDENT') this.router.navigate(['/client']);
     else if (r === 'CANDIDATE') this.router.navigate(['/candidate']);
     else this.router.navigate(['/']);
+  }
+
+  private handlePostLogin(role: string) {
+    const qrToken = localStorage.getItem('qr_approve_token');
+    if (!qrToken) {
+      this.navigateByRole(role);
+      return;
+    }
+
+    this.qrAuth.approve(qrToken).subscribe({
+      next: () => {
+        localStorage.removeItem('qr_approve_token');
+        this.router.navigate(['/auth/qr-approve'], {
+          queryParams: { approved: 'true' }
+        });
+      },
+      error: (err) => {
+        console.error('QR approve error', err);
+        localStorage.removeItem('qr_approve_token');
+        this.navigateByRole(role);
+      }
+    });
   }
 }

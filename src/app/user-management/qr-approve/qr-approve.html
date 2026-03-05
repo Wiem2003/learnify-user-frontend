@@ -1,0 +1,88 @@
+<div class="container" style="max-width:420px;margin:40px auto;">
+  <h2 style="margin-bottom:10px;">Approve sign-in</h2>
+
+  <!-- ✅ Token missing -->
+  <div *ngIf="!isApproved && !token && !hasError"
+       style="color:#c00;margin:10px 0;">
+    Missing QR token. Please scan the QR code again.
+  </div>
+
+  <p *ngIf="!isApproved && token">
+    To approve the sign-in request, log in with your Learnify account on this phone.
+  </p>
+
+  <!-- ✅ Approved -->
+  <div *ngIf="isApproved"
+       style="padding:12px;border:1px solid #d0ffd0;border-radius:8px;background:#f3fff3;">
+    ✅ Approved. You can go back to your PC.
+  </div>
+
+  <!-- ❌ Error -->
+  <div *ngIf="hasError" style="color:#c00;margin:10px 0;">
+    {{ errorMsg || 'Something went wrong. Please try again.' }}
+  </div>
+  <!-- ✅ Form -->
+  <form *ngIf="!isApproved && token"
+        (ngSubmit)="approveWithPassword()"
+        #f="ngForm"
+        autocomplete="on">
+
+    <div style="margin:12px 0;">
+      <label style="display:block;margin-bottom:6px;">Email</label>
+      <input
+        class="form-control"
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        autocomplete="email"
+        [disabled]="loading"
+      />
+    </div>
+
+    <div style="margin:12px 0;">
+      <label style="display:block;margin-bottom:6px;">Password</label>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input
+          class="form-control"
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          [(ngModel)]="password"
+          required
+          autocomplete="current-password"
+          [disabled]="loading"
+          style="flex:1;"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="showPassword = !showPassword"
+          [disabled]="loading"
+          style="white-space:nowrap;"
+        >
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary"
+            [disabled]="loading || !f.valid"
+            style="width:100%;margin-top:10px;">
+      {{ loading ? 'Approving...' : 'APPROVE' }}
+    </button>
+
+    <button type="button"
+            class="btn btn-link"
+            (click)="backToLogin()"
+            [disabled]="loading"
+            style="display:block;margin:10px auto 0;">
+      Back to login
+    </button>
+
+    <!-- ✅ Debug info (optional) -->
+    <div style="margin-top:14px;font-size:12px;color:#777;text-align:center;">
+      QR token: {{ token ? 'OK' : 'missing' }}
+    </div>
+  </form>
+</div>
