@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Learnify — Frontend (Angular)
 
 Angular 17 frontend for the **Learnify** English-learning platform. Communicates exclusively with the backend via the API Gateway at `http://localhost:8080`.
@@ -145,3 +146,7 @@ All HTTP calls go through the API Gateway. No service is called directly from th
 | `apiBase` | `http://localhost:8080/api` | General API calls |
 | `courseApiBase` | `http://localhost:8080/api/courses` | `CourseService` |
 | `apiGatewayUrl` | `http://localhost:8080` | AI service, auth, etc. |
+=======
+# learnify-user-frontend
+Angular user frontend for Learnify
+>>>>>>> 4ec544b9494b3fdebab2614a28944060ee96c9c4
