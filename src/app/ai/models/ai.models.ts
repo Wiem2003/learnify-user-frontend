@@ -98,3 +98,17 @@ export interface EventRecommendationRequest {
   categoriesLiked: string[];
   availableEvents: EventRecommendedEvent[];
 }
+
+export interface JobRecommendationRequest {
+  courseName: string;
+  grade: number;
+  level?: string;
+}
+
+export interface JobRecommendation {
+  jobTitle: string;
+  description: string;
+  requiredSkills: string[];
+  salaryRange: string;
+  matchScore: number;
+}

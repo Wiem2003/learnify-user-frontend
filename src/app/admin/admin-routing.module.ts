@@ -30,6 +30,11 @@ import { PaymentFormComponent } from './payments/payment-form/payment-form.compo
 import { CertificateListComponent } from './certificates/certificate-list/certificate-list.component';
 import { CertificateFormComponent } from './certificates/certificate-form/certificate-form.component';
 
+// Certificate Requests & Badges (CODE4)
+import { RequestListComponent } from './certificate-requests/request-list/request-list.component';
+import { BadgeListComponent } from './badges/badge-list/badge-list.component';
+import { BadgeFormComponent } from './badges/badge-form/badge-form.component';
+
 // Quiz-Feedback (CODE3)
 import { QuizListComponent } from '../quiz-feedback/components/quiz/quiz-list/quiz-list.component';
 import { QuizFormComponent } from '../quiz-feedback/components/quiz/quiz-form/quiz-form.component';
@@ -93,6 +98,14 @@ const routes: Routes = [
             { path: 'certificates', component: CertificateListComponent },
             { path: 'certificates/create', component: CertificateFormComponent },
             { path: 'certificates/:id/edit', component: CertificateFormComponent },
+
+            // Certificate Requests (CODE4)
+            { path: 'certificate-requests', component: RequestListComponent },
+
+            // Badges CRUD (CODE4)
+            { path: 'badges', component: BadgeListComponent },
+            { path: 'badges/create', component: BadgeFormComponent },
+            { path: 'badges/:id/edit', component: BadgeFormComponent },
 
             // Quizzes CRUD (CODE3)
             { path: 'quizzes', component: QuizListComponent },

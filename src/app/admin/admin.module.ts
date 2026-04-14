@@ -31,6 +31,13 @@ import { PaymentFormComponent } from './payments/payment-form/payment-form.compo
 import { CertificateListComponent } from './certificates/certificate-list/certificate-list.component';
 import { CertificateFormComponent } from './certificates/certificate-form/certificate-form.component';
 
+// Certificate Requests (CODE4)
+import { RequestListComponent } from './certificate-requests/request-list/request-list.component';
+
+// Badges (CODE4)
+import { BadgeListComponent } from './badges/badge-list/badge-list.component';
+import { BadgeFormComponent } from './badges/badge-form/badge-form.component';
+
 // Quiz-Feedback + AI modules (CODE3)
 import { QuizFeedbackModule } from '../quiz-feedback/quiz-feedback.module';
 import { AiModule } from '../ai/ai.module';
@@ -63,6 +70,10 @@ import { AdminRatingsComponent } from './ratings/admin-ratings.component';
     PaymentFormComponent,
     CertificateListComponent,
     CertificateFormComponent,
+    // Certificate Requests & Badges (CODE4)
+    RequestListComponent,
+    BadgeListComponent,
+    BadgeFormComponent,
     // Non-standalone new components
     AddAdminComponent,
     AddTutorComponent,

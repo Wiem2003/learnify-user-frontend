@@ -12,8 +12,9 @@ import {
   StudyPlanResponse,
   EventPredictionRequest,
   EventPredictionResponse,
-  EventRecommendationRequest,
-  EventRecommendedEvent
+  EventRecommendedEvent,
+  JobRecommendationRequest,
+  JobRecommendation
 } from '../models/ai.models';
 import { environment } from '../../../environments/environment';
 
@@ -53,7 +54,11 @@ export class AiService {
     return this.http.post<EventPredictionResponse>(`${this.apiUrl}/events/predict`, request);
   }
 
-  recommendEvents(request: EventRecommendationRequest): Observable<EventRecommendedEvent[]> {
+  recommendEvents(request: { categoriesLiked: string[]; availableEvents: EventRecommendedEvent[] }): Observable<EventRecommendedEvent[]> {
     return this.http.post<EventRecommendedEvent[]>(`${this.apiUrl}/events/recommend`, request);
+  }
+
+  recommendJobs(request: JobRecommendationRequest): Observable<JobRecommendation[]> {
+    return this.http.post<JobRecommendation[]>(`${this.apiUrl}/certificate/job-recommendations`, request);
   }
 }

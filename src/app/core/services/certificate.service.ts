@@ -6,6 +6,7 @@ import { ApiConfig } from '../config/api.config';
 
 export interface Certificate {
   id?: number;
+  // snake_case (legacy)
   user_id: number;
   course_id: number;
   certificate_number: string;
@@ -20,6 +21,18 @@ export interface Certificate {
   user_name?: string;
   user_email?: string;
   course_title?: string;
+  // camelCase (backend v2)
+  userId?: number;
+  courseId?: number;
+  certificateNumber?: string;
+  issueDate?: string;
+  completionDate?: string;
+  verificationCode?: string;
+  pdfPath?: string;
+  userName?: string;
+  userEmail?: string;
+  courseTitle?: string;
+  aiDescription?: string;
 }
 
 /**
@@ -129,3 +142,4 @@ export class CertificateService {
     return this.getCertificateById(id);
   }
 }
+
