@@ -1,5 +1,5 @@
 import { Component, signal, HostListener, inject, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription, interval } from 'rxjs';
 import { switchMap, startWith } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { JobNotificationService, JobNotification } from '../../services/job-noti
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   activeSection = signal<string>('hero');
@@ -149,6 +149,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   // Navigation vers une page
   navigateToPage(route: string) {
     this.router.navigate([route]);
+  }
+
+  onBrandClick(event: Event): void {
+    event.preventDefault();
+    this.scrollTo('hero');
+  }
+
+  avatarSrc(): string | null {
+    return this.currentUser?.avatarUrl ?? null;
   }
 
   isHomePage(): boolean {

@@ -21,6 +21,10 @@ export class SessionService {
     localStorage.setItem('session_user', JSON.stringify(user));
   }
 
+  getCurrentUser(): SessionUser | null {
+    return this.userSubject.getValue();
+  }
+
   clear() {
     this.userSubject.next(null);
     localStorage.removeItem('session_user');

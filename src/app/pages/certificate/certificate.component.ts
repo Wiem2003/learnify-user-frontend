@@ -174,7 +174,9 @@ Keep up the great work and continue learning!
     .qr-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
     .qr-wrap img{width:80px;height:80px;border:2px solid #e0d9c8;border-radius:6px;padding:3px;background:#fff}
     .qr-label{font-size:9px;color:#bbb;letter-spacing:2px;text-transform:uppercase}
-    @media print{body{background:white;padding:0}.cert{box-shadow:none}}
+    .print-btn{display:block;margin:32px auto 0;padding:12px 32px;background:#1a1a2e;color:#c9a84c;border:2px solid #c9a84c;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:1px}
+    .print-btn:hover{background:#c9a84c;color:#1a1a2e}
+    @media print{body{background:white;padding:0}.cert{box-shadow:none}.print-btn{display:none}}
   </style>
 </head>
 <body>
@@ -201,7 +203,8 @@ Keep up the great work and continue learning!
         <div class="qr-label">SCAN TO VERIFY</div>
       </div>
     </div>
-  <script>window.onload=()=>window.print();</script>
+    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
 </body></html>`);
     win.document.close();
   }
